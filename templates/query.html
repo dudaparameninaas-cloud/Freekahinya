@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Kahin Free Panel | Sorgu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, 'Segoe UI', 'Inter', system-ui, sans-serif;
+            min-height: 100vh;
+            background: #000000;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+
+        .video-background .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.96);
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn i {
+            color: #a0a0ff;
+            font-size: 18px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 16px 40px;
+        }
+
+        /* Sorgu Kartı - Siyah */
+        .query-card {
+            background: rgba(8, 8, 8, 0.9);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 24px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .query-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .query-title i {
+            font-size: 24px;
+            color: #9a7bcf;
+        }
+
+        .input-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #888;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            border-radius: 12px;
+            color: #e0e0e0;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: rgba(139, 92, 246, 0.6);
+        }
+
+        .input-group input::placeholder {
+            color: rgba(136, 136, 136, 0.5);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .search-btn, .clear-btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+            border: none;
+        }
+
+        .search-btn {
+            background: rgba(139, 92, 246, 0.2);
+            color: #c084fc;
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            flex: 2;
+        }
+
+        .search-btn:hover, .search-btn:active {
+            background: rgba(139, 92, 246, 0.35);
+        }
+
+        .clear-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: #aaa;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            flex: 1;
+        }
+
+        .clear-btn:hover, .clear-btn:active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 50px;
+            background: rgba(8, 8, 8, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            margin-top: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .loading-spinner {
+            width: 45px;
+            height: 45px;
+            border: 3px solid rgba(139, 92, 246, 0.2);
+            border-top-color: #9a7bcf;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 12px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading p {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        /* Sonuç Tablosu - Siyah */
+        .result-card {
+            background: rgba(8, 8, 8, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            animation: fadeIn 0.4s ease;
+            overflow-x: auto;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .result-title {
+            color: #c084fc;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .result-stats {
+            color: #888;
+            font-size: 13px;
+            background: rgba(139, 92, 246, 0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        th {
+            background: rgba(139, 92, 246, 0.08);
+            color: #c084fc;
+            padding: 12px 12px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.25);
+        }
+
+        td {
+            padding: 10px 12px;
+            color: #ccc;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+        }
+
+        tr:hover {
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 16px;
+            padding: 18px;
+            color: #f87171;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .print-btn, .copy-btn {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 10px 20px;
+            border-radius: 12px;
+            color: #aaa;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .print-btn:hover, .copy-btn:hover, .print-btn:active, .copy-btn:active {
+            background: rgba(139, 92, 246, 0.25);
+            color: #c084fc;
+        }
+
+        /* Bilgi notu */
+        .info-note {
+            background: rgba(139, 92, 246, 0.05);
+            border-left: 3px solid #9a7bcf;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 70px 12px 30px;
+            }
+
+            .query-card {
+                padding: 18px;
+            }
+
+            .query-title {
+                font-size: 18px;
+            }
+
+            .input-group input {
+                padding: 10px 14px;
+                font-size: 14px;
+            }
+
+            .search-btn, .clear-btn {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+
+            .result-card {
+                padding: 14px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="{{ url_for('static', filename='kahin.mp4') }}" type="video/mp4">
+        </video>
+        <div class="overlay"></div>
+    </div>
+
+    <a href="/" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <div class="container">
+        <div class="query-card">
+            <div class="query-title">
+                <i class="fas fa-search"></i>
+                <span id="queryTitle">Sorgu Paneli</span>
+            </div>
+
+            <div class="info-note" id="infoNote">
+                <i class="fas fa-info-circle"></i> Bu alan, adsoyad sorgulama işlemleri için kullanılmaktadır. Veriler, nüfus kaydı üzerinden sorgulanmaktadır. Sorguladığınız bilgilerin güncel olmayabileceğini lütfen unutmayın.
+            </div>
+
+            <div id="inputFields"></div>
+
+            <div class="button-group">
+                <button class="search-btn" id="searchBtn">
+                    <i class="fas fa-magic"></i> Sorgula
+                </button>
+                <button class="clear-btn" id="clearBtn">
+                    <i class="fas fa-eraser"></i> Temizle
+                </button>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <p>🔮 İşleniyor... Lütfen bekleyin, sorgu işleniyor.</p>
+        </div>
+
+        <div id="resultArea"></div>
+    </div>
+
+    <script>
+        const queryType = "{{ sorgu_tip }}";
+
+        const queryConfig = {
+            adsoyad: {
+                title: "🔍 Ad Soyad Sorgu",
+                fields: [
+                    { name: "ad", label: "Ad", placeholder: "Örn: EYMEN" },
+                    { name: "soyad", label: "Soyad", placeholder: "Örn: YAVUZ" }
+                ],
+                api: "/api/adsoyad"
+            },
+            adsoyadpro: {
+                title: "🔍 Ad Soyad Pro Sorgu",
+                fields: [
+                    { name: "ad", label: "Ad", placeholder: "Örn: ROKET" },
+                    { name: "soyad", label: "Soyad", placeholder: "Örn: ATAR" },
+                    { name: "il", label: "İl", placeholder: "Örn: BURSA" }
+                ],
+                api: "/api/adsoyadpro"
+            },
+            tcpro: {
+                title: "🆔 TC Pro Sorgu",
+                fields: [
+                    { name: "tc", label: "TC Kimlik No", placeholder: "Örn: 11111111110" }
+                ],
+                api: "/api/tcpro"
+            },
+            cocuk: {
+                title: "👶 Çocuk Sorgu",
+                fields: [
+                    { name: "tc", label: "TC Kimlik No", placeholder: "Örn: 11111111110" }
+                ],
+                api: "/api/cocuk"
+            },
+            ailepro: {
+                title: "👨‍👩‍👧‍👦 Aile Pro Sorgu",
+                fields: [
+                    { name: "tc", label: "TC Kimlik No", placeholder: "Örn: 11111111110" }
+                ],
+                api: "/api/ailepro"
+            },
+            aile: {
+                title: "🏠 Aile Sorgu",
+                fields: [
+                    { name: "tc", label: "TC Kimlik No", placeholder: "Örn: 11111111110" }
+                ],
+                api: "/api/aile"
+            },
+            adres: {
+                title: "📍 Adres Sorgu",
+                fields: [
+                    { name: "tc", label: "TC Kimlik No", placeholder: "Örn: 11111111110" }
+                ],
+                api: "/api/adres"
+            },
+            kardes: {
+                title: "👥 Kardeş Sorgu",
+                fields: [
+                    { name: "tc", label: "TC Kimlik No", placeholder: "Örn: 11111111110" }
+                ],
+                api: "/api/kardes"
+            },
+            sulale: {
+                title: "🌳 Sülale Sorgu",
+                fields: [
+                    { name: "tc", label: "TC Kimlik No", placeholder: "Örn: 11111111110" }
+                ],
+                api: "/api/sulale"
+            },
+            adililce: {
+                title: "🏙️ Ad-İl-İlçe Sorgu",
+                fields: [
+                    { name: "ad", label: "Ad", placeholder: "Örn: ROKET" },
+                    { name: "il", label: "İl", placeholder: "Örn: BURSA" },
+                    { name: "ilce", label: "İlçe", placeholder: "Örn: OSMANGAZİ" }
+                ],
+                api: "/api/adililce"
+            },
+            tcgsm: {
+                title: "📱 TC'den GSM Sorgu",
+                fields: [
+                    { name: "tc", label: "TC Kimlik No", placeholder: "Örn: 11111111110" }
+                ],
+                api: "/api/tcgsm"
+            },
+            gsmtc: {
+                title: "🔍 GSM'den TC Sorgu",
+                fields: [
+                    { name: "gsm", label: "GSM Numarası", placeholder: "Örn: 5415722525" }
+                ],
+                api: "/api/gsmtc"
+            },
+            operator: {
+                title: "📶 Operatör Sorgu",
+                fields: [
+                    { name: "numara", label: "GSM Numarası", placeholder: "Örn: 5315312472" }
+                ],
+                api: "/api/operator"
+            }
+        };
+
+        const config = queryConfig[queryType] || queryConfig.adsoyad;
+
+        document.getElementById('queryTitle').innerHTML = `<i class="fas fa-crystal-ball"></i> ${config.title}`;
+
+        // Bilgi notunu güncelle
+        const infoNote = document.getElementById('infoNote');
+        if (queryType === 'adsoyad' || queryType === 'adsoyadpro') {
+            infoNote.style.display = 'block';
+        } else {
+            infoNote.style.display = 'none';
+        }
+
+        // Input alanlarını oluştur
+        const inputFieldsDiv = document.getElementById('inputFields');
+        const inputRow = document.createElement('div');
+        inputRow.className = 'input-row';
+
+        config.fields.forEach(field => {
+            const div = document.createElement('div');
+            div.className = 'input-group';
+            div.innerHTML = `
+                <label>${field.label}</label>
+                <input type="text" id="${field.name}" placeholder="${field.placeholder}" autocomplete="off">
+            `;
+            inputRow.appendChild(div);
+        });
+        inputFieldsDiv.appendChild(inputRow);
+
+        // Sorgula butonu
+        document.getElementById('searchBtn').addEventListener('click', async () => {
+            const params = {};
+            config.fields.forEach(field => {
+                const input = document.getElementById(field.name);
+                if (input && input.value.trim()) {
+                    params[field.name] = input.value.trim().toUpperCase();
+                }
+            });
+
+            if (Object.keys(params).length === 0) {
+                alert('Lütfen en az bir alan doldurun!');
+                return;
+            }
+
+            const loading = document.getElementById('loading');
+            const resultArea = document.getElementById('resultArea');
+
+            loading.style.display = 'block';
+            resultArea.innerHTML = '';
+
+            const url = new URL(config.api, window.location.origin);
+            Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                loading.style.display = 'none';
+
+                if (data.success && data.results && data.results.length > 0) {
+                    displayResults(data.results, data.count);
+                } else {
+                    resultArea.innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i> ${data.message || 'Sonuç bulunamadı'}</div>`;
+                }
+            } catch (error) {
+                loading.style.display = 'none';
+                resultArea.innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Bağlantı hatası: ${error.message}</div>`;
+            }
+        });
+
+        // Temizle butonu
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            config.fields.forEach(field => {
+                const input = document.getElementById(field.name);
+                if (input) input.value = '';
+            });
+            document.getElementById('resultArea').innerHTML = '';
+        });
+
+        // Enter ile sorgula
+        config.fields.forEach(field => {
+            const input = document.getElementById(field.name);
+            if (input) {
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        document.getElementById('searchBtn').click();
+                    }
+                });
+            }
+        });
+
+        function displayResults(results, totalCount) {
+            const resultArea = document.getElementById('resultArea');
+
+            if (!results || results.length === 0) {
+                resultArea.innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Sonuç bulunamadı</div>`;
+                return;
+            }
+
+            // Tüm anahtarları topla
+            const allKeys = new Set();
+            results.forEach(item => {
+                Object.keys(item).forEach(key => allKeys.add(key));
+            });
+            const columns = Array.from(allKeys);
+
+            // Tablo oluştur
+            let html = `
+                <div class="result-card">
+                    <div class="result-header">
+                        <div class="result-title">
+                            <i class="fas fa-table"></i> ${config.title} Sonuç
+                        </div>
+                        <div class="result-stats">
+                            <i class="fas fa-database"></i> Toplam ${totalCount || results.length} kayıt listeleniyor
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                         <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    ${columns.map(col => `<th>${col}</th>`).join('')}
+                                </tr>
+                            </thead>
+                            <tbody>
+            `;
+
+            results.forEach((item, idx) => {
+                html += `<tr>
+                    <td>${idx + 1}</td>
+                    ${columns.map(col => {
+                        let val = item[col];
+                        if (val === null || val === undefined || val === '') val = '-';
+                        if (val === 'YOK') val = '-';
+                        return `<td>${val}</td>`;
+                    }).join('')}
+                </tr>`;
+            });
+
+            html += `
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="print-btn" onclick="window.print()"><i class="fas fa-print"></i> Yazdır</button>
+                        <button class="copy-btn" onclick="copyTable()"><i class="fas fa-copy"></i> Kopyala</button>
+                    </div>
+                </div>
+            `;
+
+            resultArea.innerHTML = html;
+        }
+
+        function copyTable() {
+            const table = document.querySelector('.result-card table');
+            if (table) {
+                const range = document.createRange();
+                range.selectNode(table);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                document.execCommand('copy');
+                window.getSelection().removeAllRanges();
+                alert('✅ Tablo kopyalandı!');
+            } else {
+                alert('Kopyalanacak veri yok');
+            }
+        }
+    </script>
+</body>
+</html>
