@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Kahin Bedeva Panel | Ücretsiz Sorgu Panel 2026</title>
+    <meta name="description" content="Kahin bedeva panel ile ad soyad, TC, GSM sorgu yap. Ücretsiz sorgu panel 2026 en hızlı sistem.">
+    <meta name="keywords" content="kahin bedeva panel, nabi bedeva panel, ücretsiz sorgu panel 2026, sorgu panel, ad soyad sorgu, tc sorgulama, gsm sorgu">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Kahin Bedeva Panel">
+    <link rel="canonical" href="https://seninsite.com/">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, 'Segoe UI', 'Inter', system-ui, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background: #000000;
+        }
+
+        /* Video Arkaplan */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+
+        .video-background .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.98) 100%);
+        }
+
+        /* Hamburger Menu Button - SAĞ TARAFTA */
+        .menu-btn {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1001;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .menu-btn i {
+            font-size: 22px;
+            color: #a0a0ff;
+        }
+
+        .menu-btn:hover {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: rgba(139, 92, 246, 0.6);
+        }
+
+        /* Sidebar - SOLDAN AÇILAN */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100vh;
+            background: #0a0a0a;
+            z-index: 1000;
+            transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 5px 0 30px rgba(0, 0, 0, 0.8);
+            overflow-y: auto;
+            border-right: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+            background: #050505;
+        }
+
+        .profile-frame {
+            position: relative;
+            width: 70px;
+            height: 70px;
+            margin-bottom: 12px;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(139, 92, 246, 0.5);
+        }
+
+        .online-badge {
+            position: absolute;
+            bottom: 3px;
+            right: 3px;
+            width: 16px;
+            height: 16px;
+            background: #10b981;
+            border-radius: 50%;
+            border: 2px solid #0a0a0a;
+        }
+
+        .online-badge i {
+            font-size: 8px;
+            color: white;
+            display: block;
+            line-height: 12px;
+            text-align: center;
+        }
+
+        .profile-info h3 {
+            color: #e0e0e0;
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+
+        .membership {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+        }
+
+        .membership span {
+            color: #888;
+            font-size: 12px;
+        }
+
+        .verified-icon {
+            color: #3b82f6;
+            font-size: 12px;
+        }
+
+        .online-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #10b981;
+            font-size: 11px;
+        }
+
+        .online-status i {
+            font-size: 7px;
+        }
+
+        .sidebar-nav {
+            padding: 16px;
+        }
+
+        .nav-group {
+            margin-bottom: 20px;
+        }
+
+        .nav-title {
+            color: #888;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            margin-bottom: 6px;
+            color: #aaa;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        .nav-item:hover, .nav-item:active {
+            background: rgba(139, 92, 246, 0.1);
+            color: #c084fc;
+            transform: translateX(5px);
+        }
+
+        .nav-item i {
+            width: 22px;
+            font-size: 16px;
+        }
+
+        .nav-item span {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* Main Content - Siyah Tema */
+        .main-content {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 16px 60px;
+        }
+
+        .hero-card {
+            max-width: 560px;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            padding: 36px 24px;
+            text-align: center;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero-icon i {
+            color: rgba(139, 92, 246, 0.7);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .hero-card h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: #e0e0e0;
+            margin-bottom: 12px;
+        }
+
+        .hero-card p {
+            color: #888;
+            font-size: 15px;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .feature {
+            background: rgba(139, 92, 246, 0.08);
+            padding: 8px 16px;
+            border-radius: 40px;
+            color: #9a7bcf;
+            font-size: 12px;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(139, 92, 246, 0.15);
+        }
+
+        /* SEO Açıklama Bölümü - ALTTA BÜYÜK */
+        .seo-container {
+            max-width: 1000px;
+            width: 100%;
+            margin-top: 60px;
+        }
+
+        .seo-card {
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            padding: 32px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            margin-bottom: 24px;
+        }
+
+        .seo-card h2 {
+            color: #c084fc;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border-left: 4px solid #8b5cf6;
+            padding-left: 16px;
+        }
+
+        .seo-card h3 {
+            color: #b0b0e0;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 20px 0 12px 0;
+        }
+
+        .seo-card p {
+            color: #9a9ac0;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .seo-card ul {
+            margin: 16px 0 16px 24px;
+            color: #9a9ac0;
+            line-height: 1.7;
+        }
+
+        .seo-card li {
+            margin-bottom: 8px;
+        }
+
+        .seo-card strong {
+            color: #c084fc;
+        }
+
+        .highlight {
+            background: rgba(139, 92, 246, 0.1);
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #c084fc;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: rgba(139, 92, 246, 0.2);
+            margin: 24px 0;
+        }
+
+        /* Modal Stilleri - Girişte Açılan Popup */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.96);
+            backdrop-filter: blur(12px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            max-width: 500px;
+            width: 90%;
+            background: linear-gradient(135deg, #0a0a0a, #0f0f1a);
+            border-radius: 28px;
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(139, 92, 246, 0.2);
+            animation: modalSlideUp 0.4s ease;
+            overflow: hidden;
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            background: rgba(139, 92, 246, 0.1);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .modal-icon i {
+            font-size: 32px;
+            color: #f59e0b;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 32px;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            color: #f87171;
+        }
+
+        .modal-body {
+            padding: 28px 24px;
+            text-align: center;
+        }
+
+        .modal-body h2 {
+            color: #c084fc;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .warning-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: rgba(245, 158, 11, 0.15);
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .warning-text i {
+            font-size: 20px;
+            color: #f59e0b;
+        }
+
+        .warning-text span {
+            color: #f59e0b;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .modal-message {
+            color: #e0e0e0;
+            font-size: 18px;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .modal-message strong {
+            color: #f87171;
+            font-size: 20px;
+        }
+
+        .telegram-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .telegram-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, #0088cc, #006699);
+            border-radius: 14px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .telegram-btn i {
+            font-size: 20px;
+        }
+
+        .telegram-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 136, 204, 0.4);
+        }
+
+        .telegram-btn.chat {
+            background: linear-gradient(135deg, #26a5e4, #0e6b9e);
+        }
+
+        .vip-info {
+            background: rgba(139, 92, 246, 0.1);
+            padding: 16px;
+            border-radius: 14px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .vip-info i {
+            color: #fbbf24;
+            font-size: 20px;
+        }
+
+        .vip-info span {
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+
+        .vip-link {
+            color: #c084fc;
+            font-weight: 700;
+            text-decoration: none;
+            background: rgba(139, 92, 246, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .vip-link:hover {
+            background: rgba(139, 92, 246, 0.4);
+            color: white;
+        }
+
+        .confirm-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(139, 92, 246, 0.2);
+            text-align: center;
+        }
+
+        .modal-footer p {
+            color: #f87171;
+            font-size: 12px;
+            margin: 0;
+        }
+
+        /* Mobil İyileştirmeler */
+        @media (max-width: 600px) {
+            .menu-btn {
+                width: 44px;
+                height: 44px;
+                top: 12px;
+                right: 12px;
+            }
+            
+            .menu-btn i {
+                font-size: 20px;
+            }
+            
+            .sidebar {
+                width: 280px;
+            }
+            
+            .hero-card {
+                padding: 28px 20px;
+            }
+            
+            .hero-card h1 {
+                font-size: 26px;
+            }
+            
+            .hero-card p {
+                font-size: 14px;
+            }
+            
+            .hero-icon {
+                font-size: 52px;
+            }
+            
+            .feature {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+            
+            .seo-card {
+                padding: 20px;
+            }
+            
+            .seo-card h2 {
+                font-size: 22px;
+            }
+            
+            .seo-card h3 {
+                font-size: 18px;
+            }
+            
+            .seo-card p, .seo-card li {
+                font-size: 14px;
+            }
+            
+            .modal-body h2 {
+                font-size: 20px;
+            }
+            
+            .modal-message {
+                font-size: 16px;
+            }
+            
+            .telegram-btn {
+                font-size: 14px;
+                padding: 12px 16px;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .main-content {
+                padding: 70px 12px 40px;
+            }
+            
+            .hero-card {
+                padding: 24px 16px;
+            }
+            
+            .hero-card h1 {
+                font-size: 24px;
+            }
+            
+            .seo-card {
+                padding: 16px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="video-background">
+        <video autoplay muted loop playsinline id="bgVideo">
+            <source src="{{ url_for('static', filename='kahin.mp4') }}" type="video/mp4">
+        </video>
+        <div class="overlay"></div>
+    </div>
+
+    <div class="menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="profile-frame">
+                <img src="https://i.ibb.co/wNKpBSJ9/MG-20260322-150443-567.jpg" alt="Kahin Bedeva Panel Profil" class="profile-img">
+                <div class="online-badge">
+                    <i class="fas fa-circle"></i>
+                </div>
+            </div>
+            <div class="profile-info">
+                <h3>Ücretsiz Panel</h3>
+                <div class="membership">
+                    <span>Üyelik</span>
+                    <i class="fas fa-check-circle verified-icon"></i>
+                </div>
+                <div class="online-status">
+                    <i class="fas fa-circle"></i> Çevrim içi
+                </div>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-group">
+                <div class="nav-title">🔮 TEMEL SORGULAR</div>
+                <a class="nav-item" href="/ad-soyad-sorgu" data-query="adsoyad">
+                    <i class="fas fa-user"></i>
+                    <span>Ad Soyad Sorgu</span>
+                </a>
+                <a class="nav-item" href="/ad-soyad-pro-sorgu" data-query="adsoyadpro">
+                    <i class="fas fa-user-graduate"></i>
+                    <span>Ad Soyad Pro Sorgu</span>
+                </a>
+                <a class="nav-item" href="/tc-sorgu" data-query="tcpro">
+                    <i class="fas fa-id-card"></i>
+                    <span>TC Sorgu</span>
+                </a>
+                <a class="nav-item" href="/cocuk-sorgu" data-query="cocuk">
+                    <i class="fas fa-baby"></i>
+                    <span>Çocuk Sorgu</span>
+                </a>
+            </div>
+            
+            <div class="nav-group">
+                <div class="nav-title">👨‍👩‍👧‍👦 AİLE SORGULARI</div>
+                <a class="nav-item" href="/aile-pro-sorgu" data-query="ailepro">
+                    <i class="fas fa-users"></i>
+                    <span>Aile Pro Sorgu</span>
+                </a>
+                <a class="nav-item" href="/aile-sorgu" data-query="aile">
+                    <i class="fas fa-family"></i>
+                    <span>Aile Sorgu</span>
+                </a>
+                <a class="nav-item" href="/kardes-sorgu" data-query="kardes">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Kardeş Sorgu</span>
+                </a>
+                <a class="nav-item" href="/sulale-sorgu" data-query="sulale">
+                    <i class="fas fa-tree"></i>
+                    <span>Sülale Sorgu</span>
+                </a>
+            </div>
+            
+            <div class="nav-group">
+                <div class="nav-title">📍 KONUM & İLETİŞİM</div>
+                <a class="nav-item" href="/adres-sorgu" data-query="adres">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Adres Sorgu</span>
+                </a>
+                <a class="nav-item" href="/ad-il-ilce-sorgu" data-query="adililce">
+                    <i class="fas fa-city"></i>
+                    <span>Ad-İl-İlçe Sorgu</span>
+                </a>
+                <a class="nav-item" href="/tcden-gsm-sorgu" data-query="tcgsm">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>TC'den GSM Sorgu</span>
+                </a>
+                <a class="nav-item" href="/gsmden-tc-sorgu" data-query="gsmtc">
+                    <i class="fas fa-search"></i>
+                    <span>GSM'den TC Sorgu</span>
+                </a>
+                <a class="nav-item" href="/operator-sorgu" data-query="operator">
+                    <i class="fas fa-signal"></i>
+                    <span>Operatör Sorgu</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="hero-card">
+            <div class="hero-icon">
+                <i class="fas fa-crystal-ball"></i>
+            </div>
+            <h1>Kahin Bedeva Sorgu Panel 2026</h1>
+            <p>🔮 <strong>Kahin bedeva panel</strong> ile <strong>ad soyad sorgu, TC sorgulama, GSM sorgu</strong> işlemlerini ücretsiz yapabilirsin.<br>
+            Sağ üstten menüye tıklayarak sorgunu seç.<br>
+            <strong>İyi sorgular dilerim cano!</strong></p>
+            <div class="features">
+                <span class="feature">🔍 Ad Soyad Sorgu</span>
+                <span class="feature">🆔 TC Sorgulama</span>
+                <span class="feature">👨‍👩‍👧 Aile Sorgu</span>
+                <span class="feature">📍 Adres Sorgu</span>
+                <span class="feature">📱 GSM Sorgu</span>
+                <span class="feature">🌳 Sülale Sorgu</span>
+            </div>
+        </div>
+        
+        <!-- SEO Açıklama Bölümü - ALTA BÜYÜK DETAYLI -->
+        <div class="seo-container">
+            <div class="seo-card">
+                <h2>🔮 Kahin Bedeva Panel Nedir?</h2>
+                <p><strong>Kahin bedeva panel</strong>, 2026 yılının en güncel <strong>ücretsiz sorgu panel</strong> sistemidir. Bu platform sayesinde <strong>ad soyad sorgu</strong>, <strong>TC sorgulama</strong>, <strong>GSM sorgu</strong> ve daha birçok sorgulama işlemini ücretsiz olarak gerçekleştirebilirsiniz. <strong>Nabi bedeva panel</strong> olarak da bilinen sistem, hızlı ve güvenilir altyapısıyla kullanıcıların beğenisini kazanmıştır.</p>
+                
+                <h3>📌 Ücretsiz Sorgu Panel Özellikleri</h3>
+                <ul>
+                    <li>✅ <strong>Ad Soyad Sorgu</strong> - Kişinin ad ve soyad bilgileriyle detaylı sorgulama</li>
+                    <li>✅ <strong>TC Kimlik Sorgulama</strong> - 11 haneli TC numarası ile kişisel bilgilere erişim</li>
+                    <li>✅ <strong>GSM Numarası Sorgu</strong> - Telefon numarasından TC kimlik sorgulama</li>
+                    <li>✅ <strong>Aile Sorgu</strong> - Kişinin aile üyelerini listeleme</li>
+                    <li>✅ <strong>Adres Sorgu</strong> - İkametgah adresi bilgisi</li>
+                    <li>✅ <strong>Sülale Sorgu</strong> - Geniş aile ağacı bilgileri</li>
+                </ul>
+
+                <hr>
+
+                <h3>🚀 Neden Kahin Bedeva Panel Tercih Edilmeli?</h3>
+                <p>2026 yılında en çok tercih edilen <span class="highlight">ücretsiz sorgu panel</span> sistemlerinden biri olan <strong>Kahin bedeva panel</strong>, kullanıcı dostu arayüzü, hızlı sorgulama motoru ve güvenli altyapısıyla öne çıkmaktadır. <strong>Nabi bedeva panel</strong> olarak bilinen bu sistem, özellikle <strong>ad soyad sorgu</strong> ve <strong>TC sorgulama</strong> işlemlerinde yüksek başarı oranı sunar.</p>
+                
+                <h3>🔍 Ad Soyad Sorgu Nasıl Yapılır?</h3>
+                <p><strong>Ad soyad sorgu</strong> işlemi için menüden "Ad Soyad Sorgu" seçeneğini tıklayın. Açılan sayfada kişinin adını ve soyadını girin. Saniyeler içerisinde TC kimlik, doğum tarihi, anne-baba adı, GSM gibi detaylı bilgilere ulaşabilirsiniz. Bu <strong>sorgu panel</strong> sistemi, milyonlarca kayıt üzerinden anında sonuç döndürür.</p>
+                
+                <h3>📱 GSM ve TC Sorgulama İşlemleri</h3>
+                <p><strong>GSM sorgu</strong> ile bir telefon numarasından kişinin TC kimliğine ulaşabilirsiniz. <strong>TC sorgulama</strong> ile de kişinin tüm nüfus kayıt bilgilerini detaylı olarak görebilirsiniz. Bu özellikler sayesinde <strong>Kahin bedeva panel</strong>, en kapsamlı <strong>ücretsiz sorgu panel 2026</strong> platformlarından biri haline gelmiştir.</p>
+
+                <hr>
+
+                <h3>⚡ Hızlı ve Güvenli Sorgulama</h3>
+                <p>Panelimiz, 7/24 kesintisiz hizmet vermektedir. Tüm sorgulama işlemleri şifrelenmiş bağlantılar üzerinden gerçekleştirilir. <strong>Sorgu panel</strong> sistemimiz, kullanıcı gizliliğine önem verir ve sorgulama geçmişinizi kaydetmez.</p>
+                
+                <h3>🎯 2026 Güncel Veriler</h3>
+                <p><strong>Kahin bedeva panel</strong>, 2026 yılı güncel nüfus kayıtlarıyla çalışmaktadır. <strong>Ad soyad sorgu</strong> ve <strong>TC sorgulama</strong> işlemlerinde en güncel verilere erişim sağlarsınız. Sistemimiz sürekli güncellenmekte ve iyileştirilmektedir.</p>
+
+                <hr>
+
+                <h3>📞 Sık Sorulan Sorular</h3>
+                <p><strong>Soru: Kahin bedeva panel ücretli mi?</strong><br>
+                Cevap: Hayır, tamamen <strong>ücretsiz sorgu panel</strong> hizmeti vermektedir.</p>
+                
+                <p><strong>Soru: Hangi sorgulama türleri mevcut?</strong><br>
+                Cevap: <strong>Ad soyad sorgu</strong>, TC sorgulama, GSM sorgu, aile sorgu, adres sorgu, sülale sorgu ve daha fazlası.</p>
+                
+                <p><strong>Soru: Sorgulama sonuçları güvenilir mi?</strong><br>
+                Cevap: Evet, sistem resmi nüfus kayıtları üzerinden çalışmaktadır. Sonuçlar güncel ve doğrudur.</p>
+                
+                <p><strong>Soru: Mobil cihazlardan kullanabilir miyim?</strong><br>
+                Cevap: Evet, panelimiz tamamen mobil uyumludur. Telefon veya tabletten rahatça kullanabilirsiniz.</p>
+                
+                <hr>
+                
+                <p style="text-align: center; font-size: 14px; margin-top: 20px;">
+                    <strong>🔮 Kahin bedeva panel | Nabi bedeva panel | Ücretsiz sorgu panel 2026 | Sorgu panel | Ad soyad sorgu | TC sorgulama | GSM sorgu</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Popup - Girişte Açılan Kutu -->
+    <div id="welcomeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <button class="modal-close" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h2>🔮 KAHİN BEDEVA PANEL</h2>
+                <div class="warning-text">
+                    <i class="fas fa-ban"></i>
+                    <span>⚠️ ÖNEMLİ UYARI ⚠️</span>
+                </div>
+                <p class="modal-message">
+                    Telegram kanalımıza katılmadığınız takdirde<br>
+                    <strong>sitemizden banlanacaksınız!</strong>
+                </p>
+                <div class="telegram-links">
+                    <a href="https://t.me/nabisystem" target="_blank" class="telegram-btn">
+                        <i class="fab fa-telegram"></i> @nabisystem
+                    </a>
+                    <a href="https://t.me/Ucretsiz_Sorgu_Chat" target="_blank" class="telegram-btn chat">
+                        <i class="fab fa-telegram"></i> @Ucretsiz_Sorgu_Chat
+                    </a>
+                </div>
+                <div class="vip-info">
+                    <i class="fas fa-crown"></i>
+                    <span>VIP Panel almak için:</span>
+                    <a href="https://t.me/yenilenme" target="_blank" class="vip-link">@yenilenme</a>
+                    <span>ile iletişime geçin</span>
+                </div>
+                <button class="confirm-btn" id="confirmBtn">
+                    <i class="fas fa-check-circle"></i> Anladım, kanala katılacağım
+                </button>
+            </div>
+            <div class="modal-footer">
+                <p>⚠️ Uyarı: Katılmadığınızda IP adresiniz banlanacaktır!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal işlemleri
+        const modal = document.getElementById('welcomeModal');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const confirmBtn = document.getElementById('confirmBtn');
+
+        // Sayfa açıldığında modal'ı göster
+        window.addEventListener('load', () => {
+            modal.style.display = 'flex';
+        });
+
+        // Kapatma butonları
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+        confirmBtn.addEventListener('click', closeModal);
+
+        // Modal dışına tıklayınca kapatma
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Menü işlemleri
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sidebar.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && !menuBtn.contains(e.target) && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // URL düzeltme - SEO dostu linkler
+        const routes = {
+            adsoyad: "/ad-soyad-sorgu",
+            adsoyadpro: "/ad-soyad-pro-sorgu",
+            tcpro: "/tc-sorgu",
+            cocuk: "/cocuk-sorgu",
+            ailepro: "/aile-pro-sorgu",
+            aile: "/aile-sorgu",
+            adres: "/adres-sorgu",
+            kardes: "/kardes-sorgu",
+            sulale: "/sulale-sorgu",
+            adililce: "/ad-il-ilce-sorgu",
+            tcgsm: "/tcden-gsm-sorgu",
+            gsmtc: "/gsmden-tc-sorgu",
+            operator: "/operator-sorgu"
+        };
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const queryType = item.dataset.query;
+                const url = routes[queryType] || `/query?type=${queryType}`;
+                window.location.href = url;
+            });
+        });
+        
+        
+        const video = document.getElementById('bgVideo');
+        if (video) {
+            video.play().catch(e => console.log('Video otomatik oynatma engellendi'));
+        }
+    </script>
+</body>
+</html>
