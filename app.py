@@ -428,23 +428,82 @@ def api_operator():
 @app.route('/sitemap.xml')
 def sitemap():
     site_url = "https://kahinfreepanel.2026tr.xyz"
-    return f"""<?xml version="1.0" encoding="UTF-8"?>
+    return app.response_class(
+        f"""<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <url><loc>{site_url}/</loc><priority>1.0</priority><changefreq>daily</changefreq></url>
-    <url><loc>{site_url}/ad-soyad-sorgu</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-    <url><loc>{site_url}/ad-soyad-pro-sorgu</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-    <url><loc>{site_url}/tc-sorgu</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-    <url><loc>{site_url}/cocuk-sorgu</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-    <url><loc>{site_url}/aile-sorgu</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-    <url><loc>{site_url}/aile-pro-sorgu</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-    <url><loc>{site_url}/kardes-sorgu</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-    <url><loc>{site_url}/sulale-sorgu</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-    <url><loc>{site_url}/adres-sorgu</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-    <url><loc>{site_url}/ad-il-ilce-sorgu</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-    <url><loc>{site_url}/tcden-gsm-sorgu</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-    <url><loc>{site_url}/gsmden-tc-sorgu</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-    <url><loc>{site_url}/operator-sorgu</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-</urlset>"""
+    <url>
+        <loc>{site_url}/</loc>
+        <priority>1.0</priority>
+        <changefreq>daily</changefreq>
+    </url>
+    <url>
+        <loc>{site_url}/ad-soyad-sorgu</loc>
+        <priority>0.9</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>{site_url}/ad-soyad-pro-sorgu</loc>
+        <priority>0.9</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>{site_url}/tc-sorgu</loc>
+        <priority>0.9</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>{site_url}/cocuk-sorgu</loc>
+        <priority>0.8</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>{site_url}/aile-sorgu</loc>
+        <priority>0.8</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>{site_url}/aile-pro-sorgu</loc>
+        <priority>0.8</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>{site_url}/kardes-sorgu</loc>
+        <priority>0.8</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>{site_url}/sulale-sorgu</loc>
+        <priority>0.8</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>{site_url}/adres-sorgu</loc>
+        <priority>0.8</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>{site_url}/ad-il-ilce-sorgu</loc>
+        <priority>0.8</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>{site_url}/tcden-gsm-sorgu</loc>
+        <priority>0.8</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>{site_url}/gsmden-tc-sorgu</loc>
+        <priority>0.8</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>{site_url}/operator-sorgu</loc>
+        <priority>0.8</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+</urlset>""",
+        mimetype='application/xml'
+    )
 
 @app.route('/robots.txt')
 def robots():
